@@ -1,3 +1,3 @@
 # Coding The Matrix
 
-My notes and scratch work for the _Coding The Matrix_ textbook by Philip N. Klein.
+My notes and scratch work for Philip N. Klein's textbook Coding The Matrix
