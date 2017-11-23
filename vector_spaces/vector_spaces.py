@@ -63,4 +63,35 @@ def test_scalars(clist):
   result = lin_comb(vlist, clist)
   return [result[0], result[1], result[2]]
 
-# vector_spaces.vector_spaces.test_scalars([0, -1, 1])
+# the vectors in u1 + V are exactly the set of all affine combinations of u1, u2, and u3
+# - affine combination means some linear combination where the coefficients sum to one.
+# I think a good way to think about this is that the "sum to one" is a constraint on
+# the "planeness" of the point-vectors.
+
+# the set of all affine combinations of vectors is called the 'affine hull'
+# does the affine hull always sketch out the geometry of the set of vectors? (the hull, I suppose)
+
+# affine hull of a single object is a point
+# affine hull of two vectors is a line
+# affine hull of three vectors is a plane
+
+# seems like it collapses the geometry of the linear combination down a dimension
+
+# an affine space is the result of translating a vector space
+# QUESTION: why are affine combinations and affine hulls constrained, but affine spaces seemingly unbounded?
+
+# a flat is just an affine space that is a subset of R^n for some n.
+# this makes sense because defining a flat as a "shape" kind of relies on some human context.
+# really, the shape only exists because of the contrast between hull and negative space (a _subset_ of R^n)
+# and the translation component is important because a flat isn't defined to be rooted at the origin, but a vector space must contain it
+# in order to retain closure of composition
+
+# although, it appears that you can biject an affine space to an affine hull of "some vectors"
+# (not necessarily those that define the span of the affine's spaces space). This
+# is probably useful because you can go from reasoning about vector spaces to reasoning
+# about sets and affine combinations.
+
+# convex combination is an affine combination where coefficients must be non-negative.
+# the hull formed from convex combinations is the space defined inside of the vectors -
+# so an affine hull would be a plane and a convex hull would be a triangle
+
