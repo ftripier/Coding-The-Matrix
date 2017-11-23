@@ -19,6 +19,11 @@ def standard(D, one):
 # but if we add [3, 3]
 # 1 * [3, 4] - 1 * [3, 3]
 #
+# EDIT: I was wrong it's totally possible.
+# [1, 0] = 1 * [3, 4] - 2 * [1, 2]
+# [0, 1] = (-0.5) * [3, 4] + 1.5 * [1, 2]
+
+#
 # 2. [1, 1], [2, 2], [3, 3]
 # [1, 0] = impossible, there's no difference of one between and vector's first component
 # but if we add [1, 2]
