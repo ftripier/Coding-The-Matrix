@@ -39,11 +39,23 @@ def standard(D, one):
 # [10, 10, 10] and [3, 13, -22]
 # difference is [7, -3, 33]
 # still not getting anything.
-# TODO: solve this problem
-# 
+#
+# it seems I need a third vector that isn't parallel to either of the given vectors.
+# so, a vector with a non-1 dot product with either vector.
+# so [1, 2, 3] should work
 
 # [1, 0, 0] = 
 # [0, 1, 0] =
 # [0, 0, 1] =
 
+def test_scalars(clist):
+  from vector.vec import Vec
+  D = {0, 1, 2}
+  a = Vec(D, {0: 1, 1: 1, 2: 1})
+  b = Vec(D, {0: 0.4, 1: 1.3, 2: -2.2})
+  c = Vec(D, {0: 1.4, 1: 0.3, 2: -1.2})
+  vlist = [a, b, c]
+  result = lin_comb(vlist, clist)
+  return [result[0], result[1], result[2]]
 
+# vector_spaces.vector_spaces.test_scalars([0, -1, 1])

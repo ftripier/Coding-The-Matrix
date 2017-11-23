@@ -69,7 +69,7 @@ def equal(u,v):
     """
     assert u.D == v.D
     for item in u.D:
-        if u.getitem(item) != v.getitem(item):
+        if u[i] != v[i]:
             return False
     return True
 
@@ -108,7 +108,7 @@ def add(u,v):
     True
     """
     assert u.D == v.D
-    return Vec(self.D, {d: u.getitem(d) + v.getitem(d) for d in u.D})
+    return Vec(u.D, {d: u[d] + v[d] for d in u.D})
 
 def dot(u,v):
     """
@@ -142,7 +142,7 @@ def dot(u,v):
     12
     """
     assert u.D == v.D
-    return sum([u.getitem(d) * v.getitem(d) for d in u.D])
+    return sum([u[d] * v[d] for d in u.D])
 
 def scalar_mul(v, alpha):
     """
