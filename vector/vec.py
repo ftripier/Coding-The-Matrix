@@ -12,7 +12,7 @@ def getitem(v,k):
     0
     """
     assert k in v.D
-    return v.f[k]
+    return v.f.get(k) if v.f.get(k) is not None else 0.0
 
 def setitem(v,k,val):
     """
