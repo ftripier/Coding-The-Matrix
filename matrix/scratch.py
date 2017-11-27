@@ -43,5 +43,4 @@ def determine_consumption():
 
   b = Vec({0, 1, 2, 3, 4}, {0: 140.0, 1: 170.0, 2: 60.0, 3: 170.0, 4:250.0})
   A = matutil.rowdict2mat([v0, v1, v2, v3, v4])
-  print(A)
   rate = solver.solve(A, b)
