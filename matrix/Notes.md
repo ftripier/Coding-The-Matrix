@@ -45,3 +45,8 @@ The kernel must have closure over addition because, say we have v1 and v2 in the
 f(v1) = 0 and f(v2) = 0 by definition. f(v1 + v2) = 0 by L2
 
 THe kernel must have closure over scalar multiplication by L1, following the same logic.
+
+Matrix-matrix multiplication
+row r of AB = (row r of A) * B
+columns s of AB = A * (column s of B)
+entry rc of AB is the dot-product of row r of A with column c of B

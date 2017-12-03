@@ -61,8 +61,12 @@ a + b = [14, 30]
 f([3, 8]) = [11, 30]
 which violates L1
 
+4.13.2:
+if f is a linear function and g is its inverse then g is also a linear function
 
+for every scalar a and vector y in the domain of g, g(a*y) = a*g(y)
 
-
-
-
+g(a * y)  = g(a * f(x))
+          = g(f(a * x))
+          = a * x
+          = a * g(y)
