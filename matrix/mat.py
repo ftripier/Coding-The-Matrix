@@ -222,7 +222,19 @@ def matrix_matrix_mul(A, B):
     True
     """
     assert A.D[1] == B.D[0]
-    pass
+    R = A.D[0]
+    C = B.D[1]
+    D = (R, C)
+
+    new_rows = {}
+
+    for r in R:
+        for c in C:
+            rA = Vec(A.D[0], {c: A[(r, c)] for c in A.D[1]})
+            cB = Vec(B.D[1], {r: B[(r, c)] for r in B.D[0]})
+            new_rows[(r, c)] = rA * cB
+        
+    return Mat(D, new_rows)
 
 ################################################################################
 

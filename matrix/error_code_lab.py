@@ -15,3 +15,17 @@ G = listlist2mat([
 message1 = list2vec([one, zero, zero, one])
 
 print("the encoding of the message [1, 0, 0, 1] is ", G * message1)
+
+twobytwo = listlist2mat([
+  [one, one],
+  [zero, one]
+])
+
+inverse = listlist2mat([
+  [one, zero],
+  [one, zero]
+])
+
+print("GF(2) inverses", twobytwo * inverse)
+
+
