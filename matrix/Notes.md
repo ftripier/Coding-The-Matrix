@@ -49,4 +49,4 @@ THe kernel must have closure over scalar multiplication by L1, following the sam
 Matrix-matrix multiplication
 row r of AB = (row r of A) * B
 columns s of AB = A * (column s of B)
-entry rc of AB is the dot-product of row r of A with column c of B
+entry rc of AB is the dot-product of row r of A with column c of B 

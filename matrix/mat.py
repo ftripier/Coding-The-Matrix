@@ -1,5 +1,5 @@
 # Copyright 2013 Philip N. Klein
-from vector.vec import Vec
+from vec import Vec
 
 #Test your Mat class over R and also over GF(2).  The following tests use only R.
 
@@ -113,12 +113,13 @@ def scalar_mul(M, x):
     True
     """
     keys = {}
-    for r in A.D[0]:
-        for c in A.D[1]:
+    D = M.D
+    for r in D[0]:
+        for c in D[1]:
             key = (r, c)
-            keys[key] = x * A[key]
+            keys[key] = x * M[key]
 
-    return Mat(A.D, keys)
+    return Mat(D, keys)
 
 def transpose(M):
     """
@@ -192,7 +193,7 @@ def matrix_vector_mul(M, v):
     assert M.D[1] == v.D
     R = M.D[0]
     C = M.D[1]
-    return Vec(R, {r: v * Vec(R, {c: (r, c) for c in C}) for r in R})
+    return Vec(R, {r: v * Vec(C, {c: M[(r, c)] for c in C}) for r in R})
 
 def matrix_matrix_mul(A, B):
     """
