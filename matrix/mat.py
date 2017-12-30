@@ -230,9 +230,9 @@ def matrix_matrix_mul(A, B):
 
     for r in R:
         for c in C:
-            rA = Vec(A.D[0], {c: A[(r, c)] for c in A.D[1]})
-            cB = Vec(B.D[1], {r: B[(r, c)] for r in B.D[0]})
-            new_rows[(r, c)] = rA * cB
+            rA = Vec(A.D[1], {c: A[(r, c)] for c in A.D[1]})
+            cB = Vec(B.D[0], {r: B[(r, c)] for r in B.D[0]})
+            new_rows[(r, c)] = rA * cB 
         
     return Mat(D, new_rows)
 

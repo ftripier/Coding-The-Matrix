@@ -37,3 +37,11 @@ G_INVERSE = listlist2mat([
 ])
 
 print("\ndecoded by inversion: %s" % (G_INVERSE * encoded))
+
+H = listlist2mat([
+    [zero, zero, zero, one, one, one, one],
+    [zero, one, one, zero, zero, one, one],
+    [one, zero, one, zero, one, zero, one],
+])
+
+print("\n HG is %s" % (H * G))
