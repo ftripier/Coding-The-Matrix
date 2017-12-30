@@ -1,5 +1,5 @@
 from matrix.matutil import listlist2mat, coldict2mat
-from matrix.bitutil import mat2bits, bits2mat, str2bits, bits2str
+from matrix.bitutil import mat2bits, bits2mat, str2bits, bits2str, noise
 from vector.vecutil import list2vec
 from GF2 import zero, one
 
@@ -98,8 +98,14 @@ fromBits = bits2str(inBits)
 
 print("\nbitutils test: %s", (inBits, fromBits))
 
-testBitsAsMat = bits2mat(inBits)
-decodedTestBitsAsMat = mat2bits(testBitsAsMat)
-fromMat = bits2str(decodedTestBitsAsMat)
+P = bits2mat(inBits)
+PBits = mat2bits(P)
+fromMat = bits2str(PBits)
 
-print("\nbitutils matrix test: s", (testBitsAsMat, decodedTestBitsAsMat, fromMat))
+print("\nbitutils matrix test: %s", (P, PBits, fromMat))
+
+E = noise(P, 0.02)
+perturbed = P + E
+perturbedAsString = bits2str(mat2bits(perturbed))
+
+print("\nperturbed: %s", perturbedAsString)
