@@ -1,5 +1,5 @@
 from matrix.matutil import listlist2mat, coldict2mat
-from matrix.bitutil import mat2bits, bits2mat
+from matrix.bitutil import mat2bits, bits2mat, str2bits, bits2str
 from vector.vecutil import list2vec
 from GF2 import zero, one
 
@@ -92,3 +92,8 @@ test_matrix = coldict2mat({
 })
 
 print("\n find_error_matrix_test: %s" % (find_error_matrix(test_matrix)))
+
+inBits = str2bits("test string")
+fromBits = bits2str(inBits)
+
+print("\nbitutils test: %s", (inBits, fromBits))
