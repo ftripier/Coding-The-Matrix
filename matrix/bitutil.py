@@ -10,7 +10,7 @@ Requires: fields matutil
 """
 
 from GF2 import zero, one
-import mat
+from matrix import mat
 import random
 
 def str2bits(inp):

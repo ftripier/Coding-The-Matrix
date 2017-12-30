@@ -48,17 +48,20 @@ print("\nHG is %s" % (H * G))
 
 def find_error(error_syndrome):
     comparison = (error_syndrome[0], error_syndrome[1], error_syndrome[2])
-    column_map = {
-        (zero, zero, one): list2vec([one, zero, zero, zero, zero, zero, zero]),
-        (zero, one, zero): list2vec([zero, one, zero, zero, zero, zero, zero]),
-        (zero, one, one): list2vec([zero, zero, one, zero, zero, zero, zero]),
+    try:
+        column_map = {
+            (zero, zero, one): list2vec([one, zero, zero, zero, zero, zero, zero]),
+            (zero, one, zero): list2vec([zero, one, zero, zero, zero, zero, zero]),
+            (zero, one, one): list2vec([zero, zero, one, zero, zero, zero, zero]),
 
-        (one, zero, zero): list2vec([zero, zero, zero, one, zero, zero, zero]),
-        (one, zero, one): list2vec([zero, zero, zero, zero, one, zero, zero]),
-        (one, one, zero): list2vec([zero, zero, zero, zero, zero, one, zero]),
-        (one, one, one): list2vec([zero, zero, zero, zero, zero, zero, one]) 
-    }
-    return column_map[comparison]
+            (one, zero, zero): list2vec([zero, zero, zero, one, zero, zero, zero]),
+            (one, zero, one): list2vec([zero, zero, zero, zero, one, zero, zero]),
+            (one, one, zero): list2vec([zero, zero, zero, zero, zero, one, zero]),
+            (one, one, one): list2vec([zero, zero, zero, zero, zero, zero, one]) 
+        }
+        return column_map[comparison]
+    except KeyError:
+        return list2vec([zero, zero, zero, zero, zero, zero, zero]) 
 
 non_codeword = list2vec([one, zero, one, one, zero, one, one])
 
@@ -81,7 +84,6 @@ original_message = R * correct_codeword
 print("\n The original message is: %s" % original_message)
 # 
 def find_error_matrix(S):
-    print(S.D)
     return coldict2mat(
         {c: find_error(list2vec([S[r, c] for r in S.D[0]])) for c in S.D[1]}
     )
@@ -102,10 +104,60 @@ P = bits2mat(inBits)
 PBits = mat2bits(P)
 fromMat = bits2str(PBits)
 
-print("\nbitutils matrix test: %s", (P, PBits, fromMat))
+print("\nbitutils matrix test: %s" % fromMat)
 
 E = noise(P, 0.02)
 perturbed = P + E
 perturbedAsString = bits2str(mat2bits(perturbed))
 
-print("\nperturbed: %s", perturbedAsString)
+print("\nperturbed: ", perturbedAsString)
+
+encoded = G * P
+
+print("\nencoded: %s" % encoded)
+
+def decode_bits_mat(m):
+    deencoded_mat = R * m
+    as_string = bits2str(mat2bits(deencoded_mat))
+    return as_string
+
+print("\ndeencoded: %s" % decode_bits_mat(encoded))
+
+perturbed_encoded = G * perturbed
+
+print("\nperturbed-encoded: %s" % perturbed_encoded)
+
+perturbed_deencoded = decode_bits_mat(perturbed_encoded)
+
+print("perturbed-deencoded: %s" % perturbed_deencoded)
+
+def correct(A):
+    error_matrix = find_error_matrix(H * A)
+    corrected = A + error_matrix
+    return corrected
+
+perturbed_corrected = correct(perturbed_encoded)
+perturbed_corrected_deencoded = decode_bits_mat(perturbed_corrected)
+
+error_matrix_test_string =  bits2mat(str2bits("test"))
+print("LMAO %s" % error_matrix_test_string)
+
+def get_column(m, colno):
+    return G * list2vec([m[r, colno] for r in m.D[0]])
+
+matrix_with_errors = coldict2mat({
+    0: non_codeword,
+    1: get_column(error_matrix_test_string, 0),
+    2: get_column(error_matrix_test_string, 1),
+    3: get_column(error_matrix_test_string, 2),
+    4: get_column(error_matrix_test_string, 3),
+
+    5: get_column(error_matrix_test_string, 4),
+    6: get_column(error_matrix_test_string, 5),
+    7: get_column(error_matrix_test_string, 6),
+    8: get_column(error_matrix_test_string, 7)    
+})
+
+print("correct test: %s\n%s" % (decode_bits_mat(correct(matrix_with_errors)), decode_bits_mat(matrix_with_errors)))
+
+print("perturbed corrected and decoded: %s" % perturbed_corrected_deencoded)
