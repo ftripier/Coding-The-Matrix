@@ -1,4 +1,4 @@
-from matrix.matutil import listlist2mat
+from matrix.matutil import listlist2mat, coldict2mat
 from matrix.bitutil import mat2bits, bits2mat
 from vector.vecutil import list2vec
 from GF2 import zero, one
@@ -29,14 +29,14 @@ print("\ndecoded %s" % extract_original(encoded))
 
 # heres the matrix dude!
 
-G_INVERSE = listlist2mat([
+R = listlist2mat([
     [zero, zero, zero, zero, zero, zero, one],
     [zero, zero, zero, zero, zero, one, zero],
     [zero, zero, zero, zero, one, zero, zero],
     [zero, zero, one, zero, zero, zero, zero]
 ])
 
-print("\ndecoded by inversion: %s" % (G_INVERSE * encoded))
+print("\ndecoded by inversion: %s" % (R * encoded))
 
 H = listlist2mat([
     [zero, zero, zero, one, one, one, one],
@@ -44,4 +44,51 @@ H = listlist2mat([
     [one, zero, one, zero, one, zero, one],
 ])
 
-print("\n HG is %s" % (H * G))
+print("\nHG is %s" % (H * G))
+
+def find_error(error_syndrome):
+    comparison = (error_syndrome[0], error_syndrome[1], error_syndrome[2])
+    column_map = {
+        (zero, zero, one): list2vec([one, zero, zero, zero, zero, zero, zero]),
+        (zero, one, zero): list2vec([zero, one, zero, zero, zero, zero, zero]),
+        (zero, one, one): list2vec([zero, zero, one, zero, zero, zero, zero]),
+
+        (one, zero, zero): list2vec([zero, zero, zero, one, zero, zero, zero]),
+        (one, zero, one): list2vec([zero, zero, zero, zero, one, zero, zero]),
+        (one, one, zero): list2vec([zero, zero, zero, zero, zero, one, zero]),
+        (one, one, one): list2vec([zero, zero, zero, zero, zero, zero, one]) 
+    }
+    return column_map[comparison]
+
+non_codeword = list2vec([one, zero, one, one, zero, one, one])
+
+print("\nnon codeword is: %s" % non_codeword)
+
+non_codeword_error_syndrome = H * non_codeword
+
+print("\nthe error syndrome is: %s" % non_codeword_error_syndrome)
+
+non_codeword_error = find_error(non_codeword_error_syndrome)
+
+print("\nThe error vector is: %s" % non_codeword_error)
+
+correct_codeword = non_codeword + non_codeword_error
+
+print("\n The correct codeword is: %s" % correct_codeword)
+
+original_message = R * correct_codeword
+
+print("\n The original message is: %s" % original_message)
+# 
+def find_error_matrix(S):
+    print(S.D)
+    return coldict2mat(
+        {c: find_error(list2vec([S[r, c] for r in S.D[0]])) for c in S.D[1]}
+    )
+
+test_matrix = coldict2mat({
+    0: list2vec([one, one, one]),
+    1: list2vec([zero, zero, one])
+})
+
+print("\n find_error_matrix_test: %s" % (find_error_matrix(test_matrix)))
