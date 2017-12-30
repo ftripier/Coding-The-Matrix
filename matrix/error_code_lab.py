@@ -93,7 +93,13 @@ test_matrix = coldict2mat({
 
 print("\n find_error_matrix_test: %s" % (find_error_matrix(test_matrix)))
 
-inBits = str2bits("test string")
+inBits = str2bits("I'm trying to free your mind, Neo. But I can only show you the door. You're the one that has to walk through it.")
 fromBits = bits2str(inBits)
 
 print("\nbitutils test: %s", (inBits, fromBits))
+
+testBitsAsMat = bits2mat(inBits)
+decodedTestBitsAsMat = mat2bits(testBitsAsMat)
+fromMat = bits2str(decodedTestBitsAsMat)
+
+print("\nbitutils matrix test: s", (testBitsAsMat, decodedTestBitsAsMat, fromMat))
