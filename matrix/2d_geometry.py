@@ -186,4 +186,8 @@ def test_grayscale():
   gray_colors = grayscale() * image_mat_colors
   image_mat_util.mat2display(image_mat_location, gray_colors)  
 
-test_grayscale()
+# test_grayscale()
+
+def reflect_about(x1, y1, x2, y2):
+  angle = math.atan2(y2 - y1, x2 - x1)
+  return reflect_X() * rotation(angle) * translation((x1 + x2) * 0.5, (y1 + y2) * 0.5)
