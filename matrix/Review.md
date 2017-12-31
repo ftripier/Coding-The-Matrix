@@ -22,4 +22,4 @@
 - the outer product of two vectors is the component wise multiplication of the vectors
 - a dot-product is just matrix-matrix multiplication of a one row matrix against a one column matrix
 - the inverse of matrix A is a matrix B such that A * B = I
-- 
+- one criterion for two matrices being inverses is their fuckin definition that I just wrote
