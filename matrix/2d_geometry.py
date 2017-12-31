@@ -150,3 +150,40 @@ def reflect_X():
     ("u", "y"): 0,
     ("u", "u"): 1,
   })
+
+def scale_color(r, g, b):
+  return Mat(({"r", "g", "b"}, {"r", "g", "b"}), {
+    ("r", "r"): r,
+    ("r", "g"): 0,
+    ("r", "b"): 0,
+
+    ("g", "r"): 0,
+    ("g", "g"): g,
+    ("g", "b"): 0,
+
+    ("b", "r"): 0,
+    ("b", "g"): 0,
+    ("b", "b"): b,
+  })
+
+def grayscale():
+  return Mat(({"r", "g", "b"}, {"r", "g", "b"}), {
+    ("r", "r"): 77/256,
+    ("r", "g"): 151/256,
+    ("r", "b"): 28/256,
+
+    ("g", "r"): 77/256,
+    ("g", "g"): 151/256,
+    ("g", "b"): 28/256,
+
+    ("b", "r"): 77/256,
+    ("b", "g"): 151/256,
+    ("b", "b"): 28/256,
+  })
+
+def test_grayscale():
+  image_mat_location, image_mat_colors = image_mat_util.file2mat('matrix/meme_avatar.png')
+  gray_colors = grayscale() * image_mat_colors
+  image_mat_util.mat2display(image_mat_location, gray_colors)  
+
+test_grayscale()
