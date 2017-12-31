@@ -117,3 +117,36 @@ def task_4_15_5():
   image_mat_util.mat2display(rotated_location, image_mat_colors)  
 
 # task_4_15_5()
+
+def rotation_about(theta, x, y):
+  return rotation(theta) * translation(x, y)
+
+def reflect_Y():
+  return Mat(({"x", "y", "u"}, {"x", "y", "u"}), {
+    ("x", "x"): -1,
+    ("x", "y"): 0,
+    ("x", "u"): 0,
+
+    ("y", "x"): 0,
+    ("y", "y"): 1,
+    ("y", "u"): 0,
+
+    ("u", "x"): 0,
+    ("u", "y"): 0,
+    ("u", "u"): 1,
+  })
+
+def reflect_X():
+  return Mat(({"x", "y", "u"}, {"x", "y", "u"}), {
+    ("x", "x"): 1,
+    ("x", "y"): 0,
+    ("x", "u"): 0,
+
+    ("y", "x"): 0,
+    ("y", "y"): -1,
+    ("y", "u"): 0,
+
+    ("u", "x"): 0,
+    ("u", "y"): 0,
+    ("u", "u"): 1,
+  })
