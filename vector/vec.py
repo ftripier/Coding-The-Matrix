@@ -69,7 +69,7 @@ def equal(u,v):
     """
     assert u.D == v.D
     for item in u.D:
-        if u[i] != v[i]:
+        if u[item] != v[item]:
             return False
     return True
 

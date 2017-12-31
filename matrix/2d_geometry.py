@@ -1,7 +1,36 @@
-from matrix import image_mat_util
+from matrix import image_mat_util, matutil
+from vector import vecutil
+from vec import Vec
+from mat import Mat
 
 def task_4_15_1():
   image_mat_location, image_mat_colors = image_mat_util.file2mat('matrix/meme_avatar.png')
   image_mat_util.mat2display(image_mat_location, image_mat_colors)
 
-task_4_15_1()
+# task_4_15_1()
+
+def identity():
+    return Mat(({"x", "y", "u"}, {"x", "y", "u"}), {
+        ("x", "x"): 1,
+        ("x", "y"): 0,
+        ("x", "u"): 0,
+
+        ("y", "x"): 0,
+        ("y", "y"): 1,
+        ("y", "u"): 0,
+
+        ("u", "x"): 0,
+        ("u", "y"): 0,
+        ("u", "u"): 1,
+    })
+
+def task_4_15_2():
+  test_point = Vec({"x", "y", "u"}, {"x": 2, "y": 1.5, "u": 1})
+  against_point = identity() * test_point
+  assert(against_point == test_point)
+
+  image_mat_location, image_mat_colors = image_mat_util.file2mat('matrix/meme_avatar.png')
+  ident_location = (identity() * image_mat_location)
+  assert(ident_location == image_mat_location)
+
+task_4_15_2()
