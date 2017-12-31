@@ -33,4 +33,32 @@ def task_4_15_2():
   ident_location = (identity() * image_mat_location)
   assert(ident_location == image_mat_location)
 
-task_4_15_2()
+# task_4_15_2()
+
+def translation(alpha, beta):
+    return Mat(({"x", "y", "u"}, {"x", "y", "u"}), {
+        ("x", "x"): 1,
+        ("x", "y"): 0,
+        ("x", "u"): alpha,
+
+        ("y", "x"): 0,
+        ("y", "y"): 1,
+        ("y", "u"): beta,
+
+        ("u", "x"): 0,
+        ("u", "y"): 0,
+        ("u", "u"): 1,
+    })
+
+def task_4_15_3():
+  test_point = Vec({"x", "y", "u"}, {"x": 2, "y": 1.5, "u": 1})
+  against_point = translation(1, 2) * test_point
+  expected = Vec({"x", "y", "u"}, {"x": test_point["x"] + 1, "y": test_point["y"] + 2, "u": 1})
+  assert(against_point == expected)
+  image_mat_location, image_mat_colors = image_mat_util.file2mat('matrix/meme_avatar.png')
+  translated_location = (translation(20, 20) * image_mat_location)
+  image_mat_util.mat2display(translated_location, image_mat_colors)  
+
+  
+
+task_4_15_3()
