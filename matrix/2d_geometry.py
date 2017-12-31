@@ -86,4 +86,34 @@ def task_4_15_4():
   scaled_location = (scale(2, 2) * image_mat_location)
   image_mat_util.mat2display(scaled_location, image_mat_colors) 
 
-task_4_15_4()
+# task_4_15_4()
+
+def rotation(theta):
+    return Mat(({"x", "y", "u"}, {"x", "y", "u"}), {
+      ("x", "x"): math.cos(theta),
+      ("x", "y"): -math.sin(theta),
+      ("x", "u"): 0,
+
+      ("y", "x"): math.sin(theta),
+      ("y", "y"): math.cos(theta),
+      ("y", "u"): 0,
+
+      ("u", "x"): 0,
+      ("u", "y"): 0,
+      ("u", "u"): 1,
+  })
+
+def task_4_15_5():
+  theta = math.pi/4
+  test_point = Vec({"x", "y", "u"}, {"x": math.cos(theta), "y": math.sin(theta), "u": 1})
+  rotated_point = rotation(theta) * test_point
+  expected = Vec({"x", "y", "u"}, {"x": 0, "y": 1, "u": 1})
+  print(rotated_point, expected)
+  assert(round(rotated_point["x"]) == expected["x"])
+  assert(round(rotated_point["y"]) == expected["y"])
+
+  image_mat_location, image_mat_colors = image_mat_util.file2mat('matrix/meme_avatar.png')
+  rotated_location = (translation(100, 100) * rotation(math.pi / 4) * image_mat_location)
+  image_mat_util.mat2display(rotated_location, image_mat_colors)  
+
+# task_4_15_5()
