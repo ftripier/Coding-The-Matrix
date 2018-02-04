@@ -47,3 +47,7 @@ def make_equations(x1, x2, w1, w2):
     ('y2', 'x3'): -1
   })
   return [u, v]
+
+w = Vec(D, {
+  ('y1', 'x1'): 1
+})
