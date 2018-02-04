@@ -1,0 +1,23 @@
+- A coordinate is some assignment of scalars to a vector space's generators.
+- You can compress a vector by replacing it with the closest sparse vector.
+  - This strategy appears to be suboptimal since it is both lossy and noncontinuous.
+- You can also compress an image by representing it as a coordinate of some coordinate basis.
+  - ultimately yielding the question: For a given vector space V, how can we tell if V = Span {a1,..., an}?
+  - and also: for a given vector space V, what is the minimum number of vectors whose span equals V?
+  - This streategy fails because the vectors needed to express the image's coordinate basis doesn't compress the representation.
+- The hybrid compression strategy:
+  - select a coordinate basis
+  - represent the image vector as a coordinate
+  - replace the coordinate with the closest k-sparse vector
+  - calculate the image beck from the linear combination of the k-sparse coordinate with the basis
+  - compresses and yields continuous loss.
+- To find the minimum number of vectors that span V, we can use the grow algorithm:
+  - start with defined span nil
+  - while possible, add a vector not already in the defined span.
+- we can also use the shrink algorithm:
+  - from a span of vectors that spans V, remove a vector untill the removal of a vector would cause the set to no longer span V.
+- the problem of determining if a set of vectors is linearly independent reduces to the problem of of finding a nonzero vector u such that the matrix A with column space set from the the srt of vectors yields A * u = 0, i.e. if and only if the null space of A contains a nonzero vector.
+- Thus, determining linear independence reduces to the question: How can we tell if the null space of a matrix consists solely of the zero vector.
+  - this question is equivalent to the question: How can we tell if a homogenous linear system has only the trivial solution?
+- A coordinate is guaranteed to have a unique representation in a given basis because if it had two, then the differing representations would be linearly dependent, and thus contradicting the initial assumption.
+- You can represent a point in a basis via a matrix vector equation. You can represent a change-of-basis by composing the inverse of one point-mapping linear function with a the point mapping function of the original basis.
