@@ -1,6 +1,8 @@
 from vector import vecutil
+from matrix import matutil
 from vec import Vec
 from mat import Mat
+import solver
 
 C = {'x1', 'x2', 'x3'}
 R = {'y1', 'y2', 'y3'}
@@ -51,3 +53,24 @@ def make_equations(x1, x2, w1, w2):
 w = Vec(D, {
   ('y1', 'x1'): 1
 })
+
+l0, l1 = make_equations(358, 36, 0, 0)
+l4, l5 = make_equations(329, 597, 0, 1)
+l2, l3 = make_equations(592, 157, 0, 1)
+l6, l7 = make_equations(580, 483, 0, 1)
+
+L = matutil.rowdict2mat({
+  0: l0,
+  1: l1,
+  2: l2,
+  3: l3,
+  4: l4,
+  5: l5,
+  6: l6,
+  7: l7,
+  8: w,    
+})
+
+b = vecutil.list2vec([0, 0, 0, 0, 0, 0, 0, 0, 1])
+
+print(solver.solve(L, b))
