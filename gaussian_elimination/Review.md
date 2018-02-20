@@ -16,4 +16,9 @@ This process works, because, by the lienar combinations definition of a vector-m
 
 3. How can Gaussian Elimination be used to find a basis for the null space of a matrix?
 
+Given a matrix M for Matrix A such that MA = U where U is the reduced row echelon form of A, the null rows of U correspond to the basis of the null space of matrix A. This follows from the fact that the non-null rows will be the basis of the row space, and the rank of row space equals the rank of column space, and the rank of column space plus the rank of null space equals the rank of the image space.
+
 4. How can Gaussian Elimination be used to solve a matrix-vector equation when the matrix is invertible?
+
+When reduced to row-echelon form, a matrix's inverse is easily identifiable. Given the inverse M-1, you can solve the equation
+M-1(MA)x = M-1(Mb) because the inverses will cancel out, leaving you with x = M-1Mb, with all the uknowns on one side.
