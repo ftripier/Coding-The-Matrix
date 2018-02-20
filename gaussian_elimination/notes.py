@@ -11,6 +11,9 @@ def row_rearrange_algorithm(rowlist):
     if rows_with_nonzero != []:
       pivot = rows_with_nonzero[0]
       new_rowlist.append(rowlist[pivot])
+      for r in rows_with_nonzero[1:]:
+        multiplier = rowlist[r][c]/rowlist[pivot][c]
+        rowlist[r] -= multiplier * rowlist[pivot]
       rows_left.remove(pivot)
   
   return new_rowlist
