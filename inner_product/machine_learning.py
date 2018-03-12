@@ -53,7 +53,14 @@ def loss(A, b, w):
   norm = math.sqrt(term * term)
   return norm * norm
 
-print(loss(test_ident, test_1, test_2))
+test_loss = loss(test_ident, test_1, test_2) 
+assert(abs(12 - test_loss) < 1e-10)
+
+def find_grad(A, b, w):
+  A_t = A.transpose()
+  term = A_t * (2 * ((A * w) - b))
+  norm = math.sqrt(term*term)
+  return norm
 
 
 A, b = read_training_data()
