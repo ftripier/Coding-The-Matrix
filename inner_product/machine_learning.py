@@ -2,6 +2,15 @@ import cancer_data
 import vec
 from vector import vecutil
 from matrix import matutil
+import math
+
+test_ident = matutil.rowdict2mat({
+    0: vecutil.list2vec([1, 0, 0]),
+    1: vecutil.list2vec([0, 1, 0]),
+    2: vecutil.list2vec([0, 0, 1]),
+  })
+test_1 = vecutil.list2vec([-1, -1, -1])
+test_2 = vecutil.list2vec([1, 1, 1])
 
 def read_training_data():
   return cancer_data.read_training_data('inner_product/train.data')
@@ -33,12 +42,18 @@ def fraction_wrong(A, b, w):
   return abs(result)
 
 
-assert(fraction_wrong(
-  matutil.rowdict2mat({
-    0: vecutil.list2vec([1, 0, 0]),
-    1: vecutil.list2vec([0, 1, 0]),
-    2: vecutil.list2vec([0, 0, 1]),
-  }), vecutil.list2vec([-1, -1, -1]), vecutil.list2vec([1, 1, 1])) == 1
-)
+assert(fraction_wrong(test_ident, test_1, test_2) == 1)
+
+def loss(A, b, w):
+  """
+   input: training data A, predictions b, hypothesis vector w
+   output: loss calculation on w
+  """
+  term = (A * w) - b
+  norm = math.sqrt(term * term)
+  return norm * norm
+
+print(loss(test_ident, test_1, test_2))
+
 
 A, b = read_training_data()
