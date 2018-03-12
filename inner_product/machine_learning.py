@@ -36,7 +36,7 @@ def fraction_wrong(A, b, w):
   output: The fraction of row labels r of A such that
   the sign of (row r of A) * w differs from that of b[r]
   """
-  Aw = A.transpose() * w
+  Aw = A * w
   signs = signum(Aw)
   result = ((signs * b) - len(b.D))/(-2 * len(b.D))
   return abs(result)
@@ -57,10 +57,7 @@ test_loss = loss(test_ident, test_1, test_2)
 assert(abs(12 - test_loss) < 1e-10)
 
 def find_grad(A, b, w):
-  A_t = A.transpose()
-  term = A_t * (2 * ((A * w) - b))
-  norm = math.sqrt(term*term)
-  return norm
+  return A.transpose() * (2 * ((A * w) - b))
 
 def gradient_descent_step(A, b, w, sigma):
   return w + sigma*find_grad(A, b, w)
@@ -73,3 +70,8 @@ def gradient_descent(A, b, w, sigma, T):
   return w
 
 A, b = read_training_data()
+R = A.D[0]
+C = A.D[1]
+all_ones = vec.Vec(C, {d: 1 for d in C})
+zero_vector = vec.Vec(C, {})
+print(gradient_descent(A, b, all_ones, 2e-9, 1))
