@@ -65,7 +65,7 @@ def gradient_descent(A, b, w, sigma, T):
   for i in range(T):
     w = gradient_descent_step(A, b, w, sigma)
     if (i % 30) == 0:
-      print("GRADIENT DEBUGGIN G:\nloss: %s\nfraction wrong: %s", loss(A, b, w), fraction_wrong(A, b, w))
+      print("GRADIENT STATE:\nloss: %s\nfraction wrong: %s", loss(A, b, w), fraction_wrong(A, b, w))
   return w
 
 A, b = read_training_data()
