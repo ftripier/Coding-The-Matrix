@@ -50,8 +50,7 @@ def loss(A, b, w):
    output: loss calculation on w
   """
   term = (A * w) - b
-  norm = math.sqrt(term * term)
-  return norm * norm
+  return term * term
 
 test_loss = loss(test_ident, test_1, test_2) 
 assert(abs(12 - test_loss) < 1e-10)
@@ -66,7 +65,7 @@ def gradient_descent(A, b, w, sigma, T):
   for i in range(T):
     w = gradient_descent_step(A, b, w, sigma)
     if (i % 30) == 0:
-      print("GRADIENT DEBUGGING:\nloss: %s\nfraction wrong: %s", loss(A, b, w), fraction_wrong(A, b, w))
+      print("GRADIENT DEBUGGIN G:\nloss: %s\nfraction wrong: %s", loss(A, b, w), fraction_wrong(A, b, w))
   return w
 
 A, b = read_training_data()
