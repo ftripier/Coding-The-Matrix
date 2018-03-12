@@ -73,4 +73,4 @@ R = A.D[0]
 C = A.D[1]
 all_ones = vec.Vec(C, {d: 1 for d in C})
 zero_vector = vec.Vec(C, {})
-print(gradient_descent(A, b, all_ones, 1e-9, 900))
+print(gradient_descent(A, b, zero_vector, 1e-9, 900))
