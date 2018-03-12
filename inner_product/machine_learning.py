@@ -56,7 +56,7 @@ test_loss = loss(test_ident, test_1, test_2)
 assert(abs(12 - test_loss) < 1e-10)
 
 def find_grad(A, b, w):
-  return A.transpose() * (2 * ((A * w) - b))
+  return 2 * (A.transpose() * ((A * w) - b))
 
 def gradient_descent_step(A, b, w, sigma):
   return w + sigma*find_grad(A, b, w)
@@ -65,7 +65,7 @@ def gradient_descent(A, b, w, sigma, T):
   for i in range(T):
     w = gradient_descent_step(A, b, w, sigma)
     if (i % 30) == 0:
-      print("GRADIENT STATE:\nloss: %s\nfraction wrong: %s", loss(A, b, w), fraction_wrong(A, b, w))
+      print("GRADIENT STATE:\nloss: %s\nfraction wrong: %s\n\n", loss(A, b, w), fraction_wrong(A, b, w))
   return w
 
 A, b = read_training_data()
