@@ -54,3 +54,7 @@ So, you know that the point closest to v in the span of v will be b^parallel, an
 a = <b, v>/<v, v>. The projection of b along v is just a*v.
 
 * How can linear algebra help in optimizing a nonlinear function?
+
+In the example presented in the book, the optimization step is a linear transformation from the weight vector being optimized to a more optimal one along the gradient of some loss function.
+
+More generally, one can define an n-dimensional linear space, and use it as a search space in the n+1 dimensional space formed by considering the nonlinear loss function by sampling the n+1 component of points derived by linear transformation in the original n-dimensional space.
