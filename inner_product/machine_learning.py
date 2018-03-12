@@ -62,5 +62,13 @@ def find_grad(A, b, w):
   norm = math.sqrt(term*term)
   return norm
 
+def gradient_descent_step(A, b, w, sigma):
+  return w + sigma*find_grad(A, b, w)
+
+def gradient_descent(A, b, w, sigma, T):
+  for i in range(T):
+    w = gradient_descent_step(A, b, w, sigma)
+    if (i % 30) == 0:
+      print("GRADIENT DEBUGGING:\nloss: %s\nfraction wrong: %s", loss(A, b, w), fraction_wrong(A, b, w))
 
 A, b = read_training_data()
