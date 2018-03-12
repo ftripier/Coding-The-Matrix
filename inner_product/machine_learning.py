@@ -59,13 +59,13 @@ def find_grad(A, b, w):
   return 2 * (A.transpose() * ((A * w) - b))
 
 def gradient_descent_step(A, b, w, sigma):
-  return w + sigma*find_grad(A, b, w)
+  return w - sigma*find_grad(A, b, w)
 
 def gradient_descent(A, b, w, sigma, T):
   for i in range(T):
     w = gradient_descent_step(A, b, w, sigma)
     if (i % 30) == 0:
-      print("GRADIENT STATE:\nloss: %s\nfraction wrong: %s\n\n", loss(A, b, w), fraction_wrong(A, b, w))
+      print("GRADIENT STATE:\nloss: %s\nfraction wrong: %s\n\n" % (loss(A, b, w), fraction_wrong(A, b, w)))
   return w
 
 A, b = read_training_data()
@@ -73,4 +73,4 @@ R = A.D[0]
 C = A.D[1]
 all_ones = vec.Vec(C, {d: 1 for d in C})
 zero_vector = vec.Vec(C, {})
-print(gradient_descent(A, b, all_ones, 2e-9, 1))
+print(gradient_descent(A, b, all_ones, 1e-9, 900))
