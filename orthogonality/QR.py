@@ -1,7 +1,9 @@
 # Copyright 2013 Philip N. Klein
-from orthonormalization import aug_orthonormalize
 from dictutil import dict2list, list2dict
-from matutil import mat2coldict, coldict2mat
+from matrix import matutil
+mat2coldict = matutil.mat2coldict
+coldict2mat = matutil.coldict2mat
+from orthogonalize import aug_orthonormalize
 
 def factor(A):
     col_labels = sorted(A.D[1], key=repr)
