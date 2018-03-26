@@ -1,6 +1,10 @@
 import eigenfaces
 import image
+import math
 import vec
+import svd
+from matrix import matutil
+from vector import vecutil
 
 def image2vector(image):
   D = set()
@@ -28,8 +32,8 @@ def vector2image(vector):
   return image
 
 
-def import_faces():
-  imported = eigenfaces.load_images('singular_value_decomposition/faces')
+def import_faces(source, n=20):
+  imported = eigenfaces.load_images(source, n)
   return {
     i: image2vector(imported[i]) for i in imported
   }
@@ -45,10 +49,68 @@ def compute_image_centroid(images):
   
   return (1/len(images)) * final
 
-faces = import_faces()
+faces = import_faces('singular_value_decomposition/faces')
 centroid = compute_image_centroid(faces)
-image.image2display(vector2image(centroid))
+# image.image2display(vector2image(centroid))
 
 centered_image_vectors = {
   k: faces[k] - centroid for k in faces
 }
+
+def norm(v):
+  return math.sqrt(v * v)
+
+
+A = matutil.rowdict2mat(centered_image_vectors)
+
+U, Sigma, V = svd.factor(A)
+Vt = V.transpose()
+tenset = {i for i in range(10)}
+Uten = matutil.submatrix(U, tenset, tenset)
+Sigmaten = matutil.submatrix(Sigma, tenset, tenset)
+Vten = matutil.submatrix(Vt, {i for i in range(10)}, Vt.D[1])
+
+eigenfaces_basis = Uten*Sigmaten*Vten
+
+def projected_representation(M, x):
+  """
+  input: a matrix M with orthonormal rows and a vector x with D from Col M
+  output: the coordinate representation of the parallel of projection of x onto Row M
+  """
+  Mt = M.transpose()
+  return Mt * x
+
+def projection_length_squared(M, x):
+  term = M * projected_representation(M, x)
+  return term * term
+
+def distance_squared(M, x):
+  plen = projection_length_squared(M, x)
+  x2 = x * x
+  perpendicular = plen - x2
+  return math.sqrt(perpendicular * perpendicular)
+
+e_t = eigenfaces_basis.transpose()
+classified_distances = [distance_squared(e_t, centered_image_vectors[x]) for x in centered_image_vectors]
+print(classified_distances)
+
+unclassified = import_faces('singular_value_decomposition/unclassified', 10)
+# for k in unclassified:
+#   vector = unclassified[k]
+#   centered = vector - centroid
+#   distance = distance_squared(e_t, centered)
+#   print(distance)
+#   image.image2display(vector2image(vector))
+
+def project(M, x):
+  return M * projected_representation(M, x)
+
+image.image2display(vector2image(project(e_t, unclassified[1])))
+image.image2display(vector2image(project(e_t, unclassified[2])))
+image.image2display(vector2image(project(e_t, unclassified[3])))
+
+# non-face
+image.image2display(vector2image(project(e_t, unclassified[0])))
+
+
+

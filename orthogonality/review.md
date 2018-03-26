@@ -25,6 +25,7 @@ This works because at each step i, b is orthogonal to every vector v^n where n <
 * How does one find vectors that
 (i) span the same space as v1, ..., vn
 (ii) are mutually orthogonal
+
 by running the orthogonalization algorithm. iteratively populate a set with the loop invariant that the set is mutually orthogonal by projecting the new vector onto the currently mutually orthogonal set of vectors, and adding the resulting vector instead.
 
 
