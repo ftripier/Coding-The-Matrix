@@ -48,3 +48,7 @@ def compute_image_centroid(images):
 faces = import_faces()
 centroid = compute_image_centroid(faces)
 image.image2display(vector2image(centroid))
+
+centered_image_vectors = {
+  k: faces[k] - centroid for k in faces
+}
