@@ -27,7 +27,7 @@ _pstem = porter_stemming.PorterStemmer()
 
 data = ''
 if not os.path.exists(data):
-    data = 'data'
+    data = 'eigenvector/data'
 
 def _read_windex(fn):
     """ Return word index as dict of words to int pointers """

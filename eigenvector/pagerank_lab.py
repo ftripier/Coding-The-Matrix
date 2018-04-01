@@ -3,6 +3,7 @@ from vector import vecutil
 from vec import Vec
 import math
 import pagerank_test
+import pagerank
 
 rows = set()
 columns = set()
@@ -31,10 +32,11 @@ def make_Markov(L):
   """ make  L work like A1 via mutation"""
   links = find_num_links(L)
   for c in columns:
+    quotient = 1/links[c]
     for r in rows:
       entry = L[(r, c)]
       if entry:
-        L[(r, c)] = 1/links[c]
+        L[(r, c)] = quotient
   return L
 
 def load_small_links():
@@ -45,8 +47,9 @@ def load_small_links():
   return pagerank_test.small_links
 
 small_links = load_small_links()
+test_A1 = make_Markov(small_links)
 
-assert(make_Markov(small_links) == (
+assert(test_A1 == (
   matutil.coldict2mat({
     1: Vec(rows, {1: 1, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }),
     2: Vec(rows, {1: 0, 2: 0, 3: 1, 4: 0, 5: 0, 6: 0 }),
@@ -58,13 +61,39 @@ assert(make_Markov(small_links) == (
   })
 ))
 
-def power_method(A1, n):
+def power_method(A1, x):
   initial = Vec(columns, {d: 1.0 for d in columns})
-  for i in range(n):
+  n = len(rows)
+  for i in range(x):
     before_norm = math.sqrt(initial*initial)
-    initial = A1 * initial
+    tot = 0
+    for d in columns:
+      tot += initial[d]
+    avg = tot/n
+    term_avg = 0.15 * avg
+    a1Term = 0.85 * (A1 * initial)
+    a2Term = Vec(columns, {d: term_avg for d in columns})
+    initial = a1Term + a2Term
     after_norm = math.sqrt(initial*initial)
-    print("\nbefore: %s\nafter: %s" % (before_norm, after_norm))
+    print("ratio: %s" % (before_norm/after_norm))
   return initial
-  
 
+def load_corpus():
+  global rows
+  global columns
+  links = pagerank.read_data()
+  rows = links.D[0]
+  columns = links.D[1]
+  return links
+
+
+links = load_corpus()
+
+def wikigoogle(w, k, p):
+  related = pagerank.find_word(w)
+  related.sort(key=lambda x:p[x], reverse=True)
+  return related[:k]
+
+wiki_A1 = make_Markov(links)
+pagerank_eigenvector = power_method(wiki_A1, 10)
+wikigoogle('jordan', 10, pagerank_eigenvector)

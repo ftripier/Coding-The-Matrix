@@ -5,7 +5,4 @@ lib
 pip-selfcheck.json
 pyvenv.cfg
 __pycache__
-eigenvector/inverseindex
-eigenvector/links.bin
-eigenvector/titles.txt
-eigenvector/indexindex.txt
+eigenvector/data/
