@@ -1,6 +1,7 @@
 from matrix import matutil
 from vector import vecutil
 from vec import Vec
+import math
 import pagerank_test
 
 rows = set()
@@ -36,9 +37,16 @@ def make_Markov(L):
         L[(r, c)] = 1/links[c]
   return L
 
-rows = pagerank_test.small_links.D[0]
-columns = pagerank_test.small_links.D[1]
-assert(make_Markov(pagerank_test.small_links) == (
+def load_small_links():
+  global rows
+  global columns
+  rows = pagerank_test.small_links.D[0]
+  columns = pagerank_test.small_links.D[1]
+  return pagerank_test.small_links
+
+small_links = load_small_links()
+
+assert(make_Markov(small_links) == (
   matutil.coldict2mat({
     1: Vec(rows, {1: 1, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }),
     2: Vec(rows, {1: 0, 2: 0, 3: 1, 4: 0, 5: 0, 6: 0 }),
@@ -49,5 +57,14 @@ assert(make_Markov(pagerank_test.small_links) == (
     6: Vec(rows, {1: 0, 2: 0.5, 3: 0, 4: 0, 5: 0.5, 6: 0 }),    
   })
 ))
+
+def power_method(A1, n):
+  initial = Vec(columns, {d: 1.0 for d in columns})
+  for i in range(n):
+    before_norm = math.sqrt(initial*initial)
+    initial = A1 * initial
+    after_norm = math.sqrt(initial*initial)
+    print("\nbefore: %s\nafter: %s" % (before_norm, after_norm))
+  return initial
   
 
